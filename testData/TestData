@@ -1,0 +1,56 @@
+public static void main(String[] args) throws IOException {
+FileInputStream fis = new FileInputStream(new File(System.getProperty("user.dir") + "/testdata/data.xlsx"));
+XSSFWorkbook workbook = new XSSFWorkbook(fis);
+XSSFSheet sheet = workbook.getSheet("Sheet1");
+int lastRow = sheet.getLastRowNum(); // 0-based index
+for (int r = 1; r <= lastRow; r++) { // start at 1 if row 0 is header
+XSSFRow row = sheet.getRow(r);
+if (row == null) continue;
+int lastCell = row.getLastCellNum();
+for (int c = 0; c < lastCell; c++) {
+XSSFCell cell = row.getCell(c);
+String value = new DataFormatter().formatCellValue(cell);
+System.out.println(value);
+}
+}
+workbook.close();
+fis.close();
+}
+
+
+//writing
+
+FileOutputStream file = new FileOutputStream(System.getProperty("user.dir") + "\\testdata\\myfile.xlsx");
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Data");
+
+        XSSFRow row1 = sheet.createRow(0);
+        row1.createCell(0).setCellValue("Java");
+        row1.createCell(1).setCellValue(19);
+        row1.createCell(2).setCellValue("Automation");
+
+        XSSFRow row2 = sheet.createRow(1);
+        row2.createCell(0).setCellValue("Python");
+        row2.createCell(1).setCellValue(3);
+        row2.createCell(2).setCellValue("Automation");
+
+        XSSFRow row3 = sheet.createRow(2);
+        row3.createCell(0).setCellValue("C#");
+        row3.createCell(1).setCellValue(5);
+        row3.createCell(2).setCellValue("Automation");
+
+        workbook.write(file);
+        workbook.close();
+        file.close();
+        
+        
+        
+        
+ use cases for listener classes:
+ ===========================================
+Logging: You can use a listener to log test results, errors, or other important events during the test execution.
+Reporting: You can use a listener to generate reports or update existing reports with test results.
+Test retry: You can use a listener to retry failed tests automatically.
+Test skipping: You can use a listener to skip certain tests based on specific conditions.
+Test configuration: You can use a listener to perform setup or teardown actions before or after test execution.
